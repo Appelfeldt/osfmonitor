@@ -13,8 +13,8 @@ var BuildVersion string
 var rootCmd = &cobra.Command{
 	Use:     "osfmonitor",
 	Version: BuildVersion,
-	Short:   "osfmonitor - View incoming OpenSeeFace data",
-	Long:    "osfmonitor is a tool for viewing received OpenSeeFace data",
+	Short:   "osfmonitor - View incoming OpenSeeFace tracking data",
+	Long:    "osfmonitor is a tool for viewing OpenSeeFace tracking data received over the network",
 	Args:    cobra.MaximumNArgs(0),
 	Run:     command,
 }
