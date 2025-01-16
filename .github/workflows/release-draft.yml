@@ -54,34 +54,43 @@ jobs:
         filename: 'osfmonitor-linux-amd64.zip'
         directory: bin/linux-amd64/
         
+    # - name: release
+    #   uses: actions/create-release@v1
+    #   id: create_release
+    #   with:
+    #     draft: true
+    #     prerelease: false
+    #     release_name: ${{ github.ref_name }}
+    #     tag_name: ${{ github.ref }}
+    #     body_path: CHANGELOG.md
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
     - name: release
-      uses: actions/create-release@v1
-      id: create_release
-      with:
-        draft: true
-        prerelease: false
-        release_name: ${{ github.ref_name }}
-        tag_name: ${{ github.ref }}
-        body_path: CHANGELOG.md
+      run: |
+        gh release create "${{ github.ref }}" ./bin/*/*.zip \
+          --title "${{ github.ref_name }}" \
+          -F CHANGELOG.md \
+          --draft
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: upload windows artifact
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: bin/win/osfmonitor-win-amd64.zip
-        asset_name: osfmonitor-win-amd64.zip
-        asset_content_type: application/zip
+    # - name: upload windows artifact
+    #   uses: actions/upload-release-asset@v1
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    #   with:
+    #     upload_url: ${{ steps.create_release.outputs.upload_url }}
+    #     asset_path: bin/win/osfmonitor-win-amd64.zip
+    #     asset_name: osfmonitor-win-amd64.zip
+    #     asset_content_type: application/zip
 
-    - name: upload linux-amd64 artifact
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: bin/linux-amd64/osfmonitor-linux-amd64.zip
-        asset_name: osfmonitor-linux-amd64.zip
-        asset_content_type: application/zip
+    # - name: upload linux-amd64 artifact
+    #   uses: actions/upload-release-asset@v1
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    #   with:
+    #     upload_url: ${{ steps.create_release.outputs.upload_url }}
+    #     asset_path: bin/linux-amd64/osfmonitor-linux-amd64.zip
+    #     asset_name: osfmonitor-linux-amd64.zip
+    #     asset_content_type: application/zip
