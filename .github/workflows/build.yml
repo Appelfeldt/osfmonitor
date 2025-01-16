@@ -25,5 +25,12 @@ jobs:
       with:
         go-version: '1.22.2'
 
+    - name: Install requirements for raylib-go
+      run: sudo apt-get install libgl1-mesa-dev libxi-dev libxcursor-dev libxrandr-dev libxinerama-dev libwayland-dev libxkbcommon-dev
+
     - name: Build windows
-      run: env GOOS=windows GOARCH=amd64 go build -o bin/ -ldflags "-X 'github.com/Appelfeldt/osfmonitor/cmd.BuildVersion=${{ github.ref }}'" -v ./...
+      run: go build -o bin/ -ldflags "-X 'github.com/Appelfeldt/osfmonitor/cmd.BuildVersion=${{ github.ref }}'" -v ./...
+      env:
+        CGO_ENABLED: 1
+        GOOS: windows
+        GOARCH: amd64
