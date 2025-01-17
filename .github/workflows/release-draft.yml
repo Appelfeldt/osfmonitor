@@ -21,7 +21,7 @@ jobs:
       run: sudo apt-get install libgl1-mesa-dev libxi-dev libxcursor-dev libxrandr-dev libxinerama-dev libwayland-dev libxkbcommon-dev mingw-w64
         
     - name: Build windows
-      run: go build -o bin/win/ -ldflags "-X 'github.com/Appelfeldt/osfmonitor/cmd.BuildVersion=${{ github.ref_name }}'" -v ./...
+      run: go build -o bin/win/ -ldflags "-H windowsgui -X 'github.com/Appelfeldt/osfmonitor/cmd.BuildVersion=${{ github.ref_name }}'" -v ./...
       env:
         CGO_ENABLED: 1
         GOOS: windows
@@ -53,18 +53,6 @@ jobs:
         type: 'zip'
         filename: 'osfmonitor-linux-amd64.zip'
         directory: bin/linux-amd64/
-        
-    # - name: release
-    #   uses: actions/create-release@v1
-    #   id: create_release
-    #   with:
-    #     draft: true
-    #     prerelease: false
-    #     release_name: ${{ github.ref_name }}
-    #     tag_name: ${{ github.ref }}
-    #     body_path: CHANGELOG.md
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: release
       run: |
@@ -74,23 +62,3 @@ jobs:
           --draft
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-    # - name: upload windows artifact
-    #   uses: actions/upload-release-asset@v1
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    #   with:
-    #     upload_url: ${{ steps.create_release.outputs.upload_url }}
-    #     asset_path: bin/win/osfmonitor-win-amd64.zip
-    #     asset_name: osfmonitor-win-amd64.zip
-    #     asset_content_type: application/zip
-
-    # - name: upload linux-amd64 artifact
-    #   uses: actions/upload-release-asset@v1
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    #   with:
-    #     upload_url: ${{ steps.create_release.outputs.upload_url }}
-    #     asset_path: bin/linux-amd64/osfmonitor-linux-amd64.zip
-    #     asset_name: osfmonitor-linux-amd64.zip
-    #     asset_content_type: application/zip
