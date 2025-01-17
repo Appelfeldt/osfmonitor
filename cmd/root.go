@@ -20,6 +20,7 @@ var rootCmd = &cobra.Command{
 }
 
 func Execute() {
+	cobra.MousetrapHelpText = "" //Disables cobra functionality that blocks the program from being run through the GUI (explorer.exe) on Microsoft Windows.
 	if err := rootCmd.Execute(); err != nil {
 		log.Fatal(err)
 	}
