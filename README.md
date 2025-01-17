@@ -1,5 +1,5 @@
 # osfmonitor
-**osfmonitor** is a tool for viewing OpenSeeFace tracking data received over the network.
+**osfmonitor** is a GUI tool for viewing OpenSeeFace tracking data received over the network.
 
 ## Usage
 ```osfmonitor [flags]```
